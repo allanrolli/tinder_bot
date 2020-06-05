@@ -1,4 +1,4 @@
-# tinder_bot
+# tinder_bot beta version
 tinder bot in python
 
 ```
