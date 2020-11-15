@@ -1,25 +1,30 @@
 from selenium import webdriver
 from time import sleep
-
 from secrets import username, password
 
 
 class TinderBot:
     def __init__(self):
-        self.driver = webdriver.Chrome('../../../../Brade/chromedriver_win32/chromedriver.exe')
+        self.driver = webdriver.Chrome('')
 
     def login(self):
         self.driver.get('https://tinder.com')
 
         sleep(5)
 
-        fb_btn = self.driver.find_element_by_xpath(
-            '//*[@id="modal-manager"]/div/div/div/div/div[3]/span/div[2]/button')
+        fb_enter = self.driver.find_element_by_xpath(
+            '//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/header/div[1]/div[2]/div/button')
+        fb_enter.click()
+
+        sleep(3)
+
+        fb_btn = self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div[1]/div/div[3]/span/div[2]/button')
         fb_btn.click()
+        sleep(2)
 
         # switch to login popup
         base_window = self.driver.window_handles[0]
-        self.driver.switch_to_window(bot.driver.window_handles[1])
+        self.driver.switch_to.window(bot.driver.window_handles[1])
 
         email_in = self.driver.find_element_by_xpath('//*[@id="email"]')
         email_in.send_keys(username)
@@ -30,7 +35,7 @@ class TinderBot:
         login_btn = self.driver.find_element_by_xpath('//*[@id="u_0_0"]')
         login_btn.click()
 
-        self.driver.switch_to_window(base_window)
+        self.driver.switch_to.window(base_window)
 
         sleep(5)
 
@@ -62,13 +67,18 @@ class TinderBot:
                     self.close_match()
 
     def close_popup(self):
-        popup_3 = self.driver.find_element_by_xpath(
-            '//*[@id="modal-manager"]/div/div/div[2]/button[2]')
-        popup_3.click()
+        try:
+            popup_3 = self.driver.find_element_by_xpath(
+                '//*[@id="modal-manager"]/div/div/button[2]')
+            popup_3.click()
+        except:
+            match_popup = self.driver.find_element_by_xpath(
+                '//*[@id="modal-manager"]/div/div/div[2]/button[2]')
+            match_popup.click()
 
     def close_match(self):
         match_popup = self.driver.find_element_by_xpath(
-            '//*[@id="modal-manager-canvas"]/div/div/div[1]/div/div[3]/a')
+            '//*[@id="modal-manager-canvas"]/div/div/div[1]/div/div[3]/button')
         match_popup.click()
 
 
